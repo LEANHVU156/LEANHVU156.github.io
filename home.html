@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="./css/todo.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+<script src="./main.js"></script>
+
+<style>
+    body
+    {
+        margin: 0 auto; /* chỉnh lề giao diện tự động */
+    }
+    .wrap
+    {
+        max-width: 600px;
+        margin:0px auto;
+    }
+</style>
+</head>
+
+<style>
+table{
+    font-size: 25px;
+    font-family:Comic Sans;
+}
+button{
+    height:50px;
+    width:70px;
+    border-radius: 10px;
+    box-shadow: 1px 5px 10px rgb(0, 0, 0);
+}
+input{
+    height: 45px;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 1px 5px 10px rgb(0, 0, 0);
+}
+.aduvip{
+    border-radius: 30px;
+}
+table {
+    border-collapse:collapse;
+}
+table, th, td {
+    border: 5px solid black;
+}
+marquee{
+    text-shadow: 1px 2px 3px rgb(0, 0, 0);
+    color: red;
+}
+img{
+    position:relative;
+    top: 30px;
+}
+.truong{
+    position:relative;
+    left: 70px;
+    bottom: 70px;
+}
+.gtvt{
+    position:relative;
+    left: 60px;
+    bottom: 65px;
+}
+.title{
+    text-shadow: 1px 2px 3px rgb(0, 0, 0);
+    position:relative;
+    bottom: 20px;
+}
+button{
+    position:relative;
+    left: 10px;
+    bottom: 1px;
+}
+
+</style>
+
+<script>
+
+function updatedata()
+{
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function()
+    {
+        if(this.readyState == 4 && this.status == 200)
+        {
+            var DataVDK = xhttp.responseText;
+            console.log("DỮ LIỆU VDK:" + DataVDK);
+            
+            var DataJson = JSON.parse(DataVDK);
+
+            if(DataJson.KCTruoc != null)
+            {
+                document.getElementById("truoc").innerHTML = DataJson.KCTruoc;
+            }
+            if(DataJson.KCSau != null)
+            {
+                document.getElementById("sau").innerHTML = DataJson.KCSau;
+            }
+            if(DataJson.KCTrai != null)
+            {
+                document.getElementById("trai").innerHTML = DataJson.KCTrai;
+            }
+            if(DataJson.KCPhai != null)
+            {
+                document.getElementById("phai").innerHTML = DataJson.KCPhai;
+            }
+            if(DataJson.GH != null)
+            {
+                document.getElementById("Toithieu").innerHTML = DataJson.GH;
+            }
+            if(DataJson.CB != null)
+            {
+                if(DataJson.CB == 1)
+                {
+                    document.getElementById("coi").innerHTML = "Nguy Hiểm!";
+                }
+                else if(DataJson.CB == 0)
+                {
+                    document.getElementById("coi").innerHTML = "An Toàn";
+                }
+            }
+        }
+    }
+    xhttp.open('GET','/Update', true);
+    xhttp.send();
+    setTimeout(function() { updatedata() }, 1000);
+}
+
+function caidat(data)
+{
+    switch(data)
+    {
+        case 1:
+            var gioihan = "E" + document.getElementById("caidat").value + "F";
+            var xhttp = new XMLHttpRequest();
+            xhttp.open('GET',"/input?input="+gioihan, true);
+            xhttp.send();
+            break;
+    }
+}
+
+
+</script>
+<body bgcolor="#FDF5E6" onload="updatedata()">
+    <br>
+    <marquee <span style="font-size:50px" ><strong>HỆ THỐNG GIAO THÔNG THÔNG MINH NHÓM 4</strong></span></marquee>
+    
+    <div class="wrap">
+        <a href= "https://www.instagram.com/xuan.nht23/" style="font-size:25px">&#10148 THANH XUÂN &#10084</a>
+        <br>
+        <a href= "https://www.instagram.com/vannss.2001/" style="font-size:25px">&#10148 VĂN NGỖNG &#10084</a>
+        <br>
+        <a href= "https://www.instagram.com/le.van.anh.vu/" style="font-size:25px">&#10148 ANH VU &#10084</a>
+        <p><span style="font-size:25px"></span></p>
+        <table border="5" width="600" height="350">
+            <img height="110px" width="160px" src="https://utt.edu.vn/home/images/stories/logo-utt-border.png">
+            <caption class="truong"><span style="font-size:35px"><b>ĐẠI HỌC CÔNG NGHỆ</b></span></caption>
+            <caption class="gtvt"><span style="font-size:35px"><b>GTVT</b></span></caption>
+            <caption class="title"><span style="font-size:35px"><b>HỆ THỐNG GIÁM SÁT VA CHẠM</b></span></caption>
+        <tr>
+            <td style="text-align:center;"><b>KC Trước:
+                <label id ="truoc">0</label> cm</b>
+            </td>
+            <td style="text-align:center;"><b>KC Trái:
+                <label id ="trai">0</label> cm</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;"><b>KC Sau:
+                <label id ="sau">0</label> cm</b>
+            </td>
+            <td style="text-align:center;"><b>KC Phải:
+                <label id ="phai">0</label> cm</b>
+            </td>
+        </tr>
+        <tfoot>
+            <tr>
+                <td height="50" colspan="20" style="text-align:center;"><b>KC Tối Thiểu:
+                    <label id ="Toithieu">0</label> cm</b>
+                </td>
+            </tr>
+        </tfoot>
+        </table>
+    
+        <h1>
+        Trạng Thái:
+        <label id ="coi">0</label>
+        </h1>
+        <h1>Nhập Khoảng Cách Tối Thiểu:</h1>
+        <input id="caidat" style="font-size:25px" type="tel" id="phone" name="phone" placeholder="123-45-678 (Cm)">
+        <button id="myBtn" onclick=caidat(1) style="font-size:20px">Gửi</button>
+        <script>
+            var input = document.getElementById("caidat");
+            input.addEventListener("keypress", function(event) {
+              if (event.key === "Enter") {
+                event.preventDefault();
+                document.getElementById("myBtn").click();
+              }
+            });
+        </script>
+    </div>
+    </body>
+    </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<style>
+		#time{
+			background: rgb(249, 248, 247);
+		    padding: 15px;
+		    color: black;
+		    font-size: 60px;
+		    font-weight: bold;
+		    text-align: center;
+		    width: 250px;
+		    margin: 30px auto;
+		    border-radius: 15px;
+		    font-family:'Times New Roman', Times, serif;
+            border: 5px solid rgb(0, 0, 0);
+            position: relative;
+            left: 150px;
+            bottom: 910px;
+		}
+	</style>
+</head>
+<body>
+	<div id="time"></div>
+	<script>
+		function dongho(){
+			var today = new Date();
+			var gio = today.getHours();
+			var phut = today.getMinutes();
+			var giay = today.getSeconds();
+
+			if(gio<10){
+				gio = "0" + gio;
+			}
+			if(phut<10){
+				phut = "0" + phut;
+			}
+			if(giay<10){
+				giay = "0" + giay;
+			}
+			document.getElementById("time").innerHTML = gio + ":" + phut + ":" + giay;
+			setTimeout("dongho()",1000);
+		}
+		dongho();
+	</script>
+</body>
+</html>
